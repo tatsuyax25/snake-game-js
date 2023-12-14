@@ -6,3 +6,8 @@ body {
   margin: 0;
   font-family: 'VT323', monospace;
 }
+
+body,
+.snake {
+  background-color: #414141;
+}
