@@ -64,3 +64,8 @@ body,
   font-weight: bolder;
   margin: 10px 0;
 }
+
+#highScore {
+  color: #d8ddca;
+  display: none;
+}
