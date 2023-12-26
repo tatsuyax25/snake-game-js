@@ -48,3 +48,19 @@ body,
   padding: 30px;
   margin: 0;
 }
+
+.scores {
+  display: flex;
+  justify-content: space-between;
+}
+
+#score {
+  color: #abb78a;
+}
+
+#score,
+#highScore {
+  font-size: 40px;
+  font-weight: bolder;
+  margin: 10px 0;
+}
