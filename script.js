@@ -5,6 +5,7 @@ const board = document.getElementById('game-board');
 let snake = [
   {x: 10, y: 10},
 ]
+let food = generateFood();
 
 // Draw game map, snake, food, etc.
 function draw() {
@@ -17,9 +18,9 @@ function drawSnake() {
   // code to draw the snake
   snake.forEach((segment) => {
     const snakeElement = createGameElement('div', 'snake');
+    setPosition(snakeElement, segment);
+    board.appendChild(snakeElement);
   });
-  setPosition(snakeElement, segment);
-  board.appendChild(snakeElement);
 }
 
 // Create a snake or food cube/div
@@ -37,3 +38,14 @@ function setPosition(element, position) {
 
 // Testing draw function
 // draw();
+
+function drawFood() {
+  // code to draw food
+  const foodElement = createGameElement('div', 'food');
+  setPosition(foodElement, food);
+  board.appendChild(foodElement);
+}
+
+function generateFood() {
+  // code to generate food
+}
