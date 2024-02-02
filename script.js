@@ -91,7 +91,7 @@ function moveSnake() {
     clearInterval(gameInterval); // Clear past interval
     gameInterval = setInterval(() => {
       moveSnake();
-      // checkCollision();
+      checkCollision();
       draw();
     }, gameSpeedDelay);
   } else {
@@ -113,7 +113,7 @@ function startGame() {
   logo.style.display = 'none';
   gameInterval = setInterval(() => {
     moveSnake();
-    // checkCollision();
+    checkCollision();
     draw();
   }, gameSpeedDelay);
 }
@@ -158,3 +158,19 @@ function increaseSpeed() {
     gameSpeedDelay -= 1;
   }
 }
+
+function checkCollision() {
+  // code to check collision
+  const head = snake[0];
+
+  if (head.x < 1 || head.x > gridSize || head.y < 1 || head.y > gridSize) {
+    resetGame();
+  }
+
+  for (let i = 1; i < snake.length; i++) {
+    if (head.x === snake[i].x && head.y === snake[i].y) {
+      resetGame();
+    }
+  }
+}
+
