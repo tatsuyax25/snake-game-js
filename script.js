@@ -8,6 +8,9 @@ let snake = [
 ]
 let food = generateFood();
 let direction = 'right';
+let gameInterval;
+let gameSpeedDelay = 200;
+
 
 // Draw game map, snake, food, etc.
 function draw() {
@@ -79,13 +82,18 @@ function moveSnake() {
   snake.unshift(head);
   if (head.x === food.x && head.y === food.y) {
     food = generateFood();
+    clearInterval(); // Clear past interval
+    gameInterval = setInterval(() => {
+      moveSnake();
+      draw();
+    }, gameSpeedDelay);
   } else {
     snake.pop();
   }
 }
 
 // Testing move snake function
-setInterval(() => {
-  moveSnake();
-  draw();
-}, 200);
+// setInterval(() => {
+//   moveSnake();
+//   draw();
+// }, 200);
