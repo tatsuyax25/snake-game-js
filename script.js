@@ -1,5 +1,9 @@
 // Define HTML elements
 const board = document.getElementById('game-board');
+const instructionText = document.getElementById('instruction-text');
+const logo = document.getElementById('logo');
+// const score = document.getElementById('score');
+// const highScore = document.getElementById('highScore');
 
 // Define game variables
 const gridSize = 20;
@@ -10,6 +14,7 @@ let food = generateFood();
 let direction = 'right';
 let gameInterval;
 let gameSpeedDelay = 200;
+let gameStarted = false;
 
 
 // Draw game map, snake, food, etc.
@@ -97,3 +102,16 @@ function moveSnake() {
 //   moveSnake();
 //   draw();
 // }, 200);
+
+// Start game function
+function startGame() {
+  // code to start the game
+  gameStarted = true; // Keep track of a running game.
+  instructionText.style.display = 'none';
+  logo.style.display = 'none';
+  gameInterval = setInterval(() => {
+    moveSnake();
+    checkCollision();
+    draw();
+  }, gameSpeedDelay);
+}
