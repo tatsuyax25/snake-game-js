@@ -3,7 +3,8 @@ const board = document.getElementById('game-board');
 const instructionText = document.getElementById('instruction-text');
 const logo = document.getElementById('logo');
 const score = document.getElementById('score');
-// const highScore = document.getElementById('highScore');
+const highScoreText = document.getElementById('highScore');
+
 
 // Define game variables
 const gridSize = 20;
@@ -11,6 +12,7 @@ let snake = [
   {x: 10, y: 10},
 ]
 let food = generateFood();
+let highScore = 0;
 let direction = 'right';
 let gameInterval;
 let gameSpeedDelay = 200;
@@ -54,9 +56,11 @@ function setPosition(element, position) {
 // Draw food function
 function drawFood() {
   // code to draw food
-  const foodElement = createGameElement('div', 'food');
-  setPosition(foodElement, food);
-  board.appendChild(foodElement);
+  if (gameStarted) {
+    const foodElement = createGameElement("div", "food");
+    setPosition(foodElement, food);
+    board.appendChild(foodElement);
+  }
 }
 
 // Generate food
@@ -86,6 +90,7 @@ function moveSnake() {
       break;
   }
   snake.unshift(head);
+
   if (head.x === food.x && head.y === food.y) {
     food = generateFood();
     increaseSpeed();
@@ -177,16 +182,13 @@ function checkCollision() {
 
 function resetGame() {
   // code to reset the game
-  // clearInterval(gameInterval);
-  // gameStarted = false;
-  direction = 'right';
+  updateHighScore();
+  stopGame();
   snake = [
     {x: 10, y: 10},
   ]
   food = generateFood();
-  // draw();
-  // instructionText.style.display = 'block';
-  // logo.style.display = 'block';
+  direction = "right";
   gameSpeedDelay = 200;
   updateScore();
 }
@@ -195,4 +197,22 @@ function updateScore() {
   // code to update the score
   const currentScore = snake.length - 1;
   score.textContent = currentScore.toString().padStart(3, '0');
+}
+
+function stopGame() {
+  // code to stop the game
+  clearInterval(gameInterval);
+  gameStarted = false;
+  instructionText.style.display = 'block';
+  logo.style.display = 'block';
+}
+
+function updateHighScore() {
+  // code to update the high score
+  const currentScore = snake.length - 1;
+  if (currentScore > highScore) {
+    highScore = currentScore;
+    highScoreText.textContent = highScore.toString().padStart(3, '0');
+  }
+  highScoreText.style.display = 'block';
 }
