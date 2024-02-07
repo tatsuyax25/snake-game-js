@@ -11,33 +11,35 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <div>
-    <div class="scores">
-      <h1 id="score">000</h1>
-      <h1 id="highScore">000</h1>
-    </div>
-    <div class="game-border-1">
-      <div class="game-border-2">
-        <div class="game-border-3">
-          <div id="game-board"></div>
+  <div id="container">
+    <div id="game-board-container">
+      <div class="scores">
+        <h1 id="score">000</h1>
+        <h1 id="highScore">000</h1>
+      </div>
+      <div class="game-border-1">
+        <div class="game-border-2">
+          <div class="game-border-3">
+            <div id="game-board"></div>
+          </div>
         </div>
       </div>
     </div>
+    <div id="instruction-text">
+      <button id="start-button">Start Game</button>
+      <p>Press the button or the Spacebar to start the game.</p>
+    </div>
+    <div id="game-instruction">
+      <h2>How to play</h2>
+      <p>Use the arrow keys to move the snake around the board. Avoid hitting the walls or the snake itself.</p>
+    </div>
+    <div id="game-over-screen">
+      <h2>Game Over</h2>
+      <p id="final-score">Your final score: <span id="final-score">0</span></p>
+      <button id="restart-button">Play Again</button>
+      <button id="main-menu-button">Main Menu</button>
+    </div>
+    <img id="logo" src="snake-game-ai-gen.png" alt="Logo of the Snake Game">
   </div>
-  <div id="instruction-text">
-    <button id="start-button">Start Game</button>
-    <p>Press the button or the Spacebar to start the game.</p>
-  </div>
-  <div id="game-instruction">
-    <h2>How to play</h2>
-    <p>Use the arrow keys to move the snake around the board. Avoid hitting the walls or the snake itself.</p>
-  </div>
-  <div id="game-over-screen">
-    <h2>Game Over</h2>
-    <p id="final-score">Your final score: <span id="final-score">0</span></p>
-    <button id="restart-button">Play Again</button>
-    <button id="main-menu-button">Main Menu</button>
-  </div>
-  <img id="logo" src="snake-game-ai-gen.png" alt="Logo of the Snake Game">
 </body>
 </html>
