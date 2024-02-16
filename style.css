@@ -159,11 +159,24 @@ body,
 
 @media only screen and (max-width: 600px) {
   #game-board {
-    grid-template-columns: repeat(10, 20px);
-    grid-template-rows: repeat(10, 20px);
+    grid-template-columns: repeat(10, 30px); /* Increase column width for better visibility */
+    grid-template-rows: repeat(10, 30px); /* Increase row height for better visibility */
+    margin: 10px; /* Add some margin around the game board */
+
+  }
+
+  #container {
+    padding: 10px; /* Adjust container padding for better spacing */
+  }
+
+  #instruction-text {
+    width: 80%; /* Adjust width of instruction text for better readability */
+    font-size: 14px; /* Decrease font size for better readability */
   }
 
   #start-button {
-    margin: 5px;
+    margin: 5px; /* Increase margin for better spacing */
+    font-size: 14px; /* Decrease font size for better readability */
+    padding: 8px 12px; /* Adjust padding for better button appearance */
   }
 }
