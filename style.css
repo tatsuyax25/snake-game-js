@@ -162,7 +162,22 @@ body,
     grid-template-columns: repeat(10, 30px); /* Increase column width for better visibility */
     grid-template-rows: repeat(10, 30px); /* Increase row height for better visibility */
     margin: 10px; /* Add some margin around the game board */
+  }
 
+  .game-border-1,
+  .game-border-2,
+  .game-border-3 {
+    border-width: 5px; /* Reduce border width for better visibility */
+  }
+
+  .snake {
+    border-width: 1px; /* Reduce border width for better visibility */
+  }
+
+  .food {
+    width: 20px; /* Reduce food size for better fit on mobile screen */
+    height: 20px;
+    border-width: 3px; /* Reduce border width for better visibility */
   }
 
   #container {
@@ -178,5 +193,7 @@ body,
     margin: 5px; /* Increase margin for better spacing */
     font-size: 14px; /* Decrease font size for better readability */
     padding: 8px 12px; /* Adjust padding for better button appearance */
+    border-radius: 5px; /* Add border radius for rounded corners */
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust transparency for better visibility */
   }
 }
