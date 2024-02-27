@@ -8,9 +8,7 @@ const highScoreText = document.getElementById('highScore');
 
 // Define game variables
 const gridSize = 20;
-let snake = [
-  {x: 10, y: 10},
-]
+let snake = [{x: 10, y: 10}];
 let food = generateFood();
 let highScore = 0;
 let direction = 'right';
@@ -63,15 +61,15 @@ function drawFood() {
   }
 }
 
-// Generate food
+// Function to generate food
 function generateFood() {
   // code to generate food
   const x = Math.floor(Math.random() * gridSize) + 1;
   const y = Math.floor(Math.random() * gridSize) + 1;
-  return {x, y};
+  return { x, y };
 }
 
-// Moving the snake
+// Function to move snake
 function moveSnake() {
   // code to move the snake
   const head = { ...snake[0] };
@@ -89,20 +87,21 @@ function moveSnake() {
       head.y++;
       break;
   }
-  snake.unshift(head);
 
+  snake.unshift(head);
   if (head.x === food.x && head.y === food.y) {
     food = generateFood();
     increaseSpeed();
-    clearInterval(gameInterval); // Clear past interval
-    gameInterval = setInterval(() => {
-      moveSnake();
-      checkCollision();
-      draw();
-    }, gameSpeedDelay);
   } else {
     snake.pop();
   }
+
+  if (checkCollision()) {
+    stopGame();
+    resetGame();
+  }
+
+  draw();
 }
 
 // Testing move snake function
@@ -111,17 +110,15 @@ function moveSnake() {
 //   draw();
 // }, 200);
 
-// Start game function
+// Function to start the game
 function startGame() {
   // code to start the game
-  gameStarted = true; // Keep track of a running game.
-  instructionText.style.display = 'none';
-  logo.style.display = 'none';
-  gameInterval = setInterval(() => {
-    moveSnake();
-    checkCollision();
-    draw();
-  }, gameSpeedDelay);
+  if (!gameStarted) {
+    gameStarted = true; // Keep track of a running game.
+    instructionText.style.display = 'none';
+    logo.style.display = 'none';
+    gameInterval = setInterval(moveSnake, gameSpeedDelay);
+  }
 }
 
 // Keypress event listeners
@@ -150,55 +147,61 @@ function handleKeyPress(event) {
   }
 };
 
-document.addEventListener('keydown', handleKeyPress);
+// Event listener fo key presses
+document.addEventListener('keydown', (event) => {
+  if (event.key.startsWith('Arrow')) {
+    direction = event.key.toLowerCase().replace('arrow', '');
+  } else if (event.code === 'Space' && !gameStarted) {
+    startGame();
+  }
+});
 
+// Function to increase game speed
 function increaseSpeed() {
-  // console.log(gameSpeedDelay);
-  if (gameSpeedDelay > 150) {
+  if (gameSpeedDelay > 25) {
     gameSpeedDelay -= 5;
-  } else if (gameSpeedDelay > 100) {
-    gameSpeedDelay -= 3;
-  } else if (gameSpeedDelay > 50) {
-    gameSpeedDelay -= 2;
-  } else if (gameSpeedDelay > 25) {
-    gameSpeedDelay -= 1;
   }
 }
 
+// Function to check collision
 function checkCollision() {
   // code to check collision
   const head = snake[0];
 
   if (head.x < 1 || head.x > gridSize || head.y < 1 || head.y > gridSize) {
-    resetGame();
+    return true;
   }
 
   for (let i = 1; i < snake.length; i++) {
     if (head.x === snake[i].x && head.y === snake[i].y) {
-      resetGame();
+      return true;
     }
   }
+
+  return false;
 }
 
+// Function to reset the game
 function resetGame() {
   // code to reset the game
-  updateHighScore();
-  stopGame();
-  snake = [
-    {x: 10, y: 10},
-  ]
-  food = generateFood();
+  snake = [{ x: 10, y: 10 }];
   direction = "right";
   gameSpeedDelay = 200;
   updateScore();
 }
 
+// Function to update the score
 function updateScore() {
   // code to update the score
   const currentScore = snake.length - 1;
   score.textContent = currentScore.toString().padStart(3, '0');
+  if (currentScore > highScore) {
+    highScore = currentScore;
+    highScoreText.textContent = highScore.toString().padStart(3, '0');
+  }
 }
 
+// Function to stop the game
 function stopGame() {
   // code to stop the game
   clearInterval(gameInterval);
