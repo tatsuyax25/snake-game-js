@@ -4,6 +4,7 @@ const instructionText = document.getElementById('instruction-text');
 const logo = document.getElementById('logo');
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
+const startButton = document.getElementById('start-button');
 
 
 // Define game variables
@@ -147,12 +148,17 @@ function handleKeyPress(event) {
   }
 };
 
+// Event listener for "Start Game" button click
+startButton.addEventListener('click', () => {
+  startGame();
+});
+
 // Event listener fo key presses
 document.addEventListener('keydown', (event) => {
-  if (event.key.startsWith('Arrow')) {
-    direction = event.key.toLowerCase().replace('arrow', '');
-  } else if (event.code === 'Space' && !gameStarted) {
+  if ((event.code === 'Space' || event.key === ' ') && !gameStarted) {
     startGame();
+  } else if (event.key.startsWith('Arrow')) {
+    direction = event.key.toLowerCase().replace("arrow", "");
   }
 });
 
