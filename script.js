@@ -5,6 +5,7 @@ const logo = document.getElementById('logo');
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
 const startButton = document.getElementById('start-button');
+const gameOverScreen = document.getElementById('game-over-screen');
 
 
 // Define game variables
@@ -190,6 +191,8 @@ function checkCollision() {
 // Function to reset the game
 function resetGame() {
   // code to reset the game
+  updateHighScore();
+  stopGame();
   snake = [{ x: 10, y: 10 }];
   direction = "right";
   gameSpeedDelay = 200;
@@ -225,3 +228,11 @@ function updateHighScore() {
   }
   highScoreText.style.display = 'block';
 }
+
+// Function to display game over screen
+function displayGameOver() {
+  gameOverScreen.textContent = 'Game Over! Your Score: ${snake.length - 1}';
+  gameOverScreen.style.display = 'block';
+}
+
+
