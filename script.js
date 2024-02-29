@@ -8,6 +8,7 @@ const startButton = document.getElementById('start-button');
 const gameOverScreen = document.getElementById('game-over-screen');
 
 
+
 // Define game variables
 const gridSize = 20;
 let snake = [{x: 10, y: 10}];
@@ -50,9 +51,6 @@ function setPosition(element, position) {
   element.style.gridRowStart = position.y;
 }
 
-// Testing draw function
-// draw();
-
 // Draw food function
 function drawFood() {
   // code to draw food
@@ -60,6 +58,11 @@ function drawFood() {
     const foodElement = createGameElement("div", "food");
     setPosition(foodElement, food);
     board.appendChild(foodElement);
+  } else if (snake.length > 1) {
+    const finalScoreElement = document.getElementById("final-score");
+    finalScoreElement.textContent = `Final Score: ${snake.length - 1}`;
+    finalScoreElement.style.display = "block"; // Display the final score
+    gameOverScreen.style.display = "block"; // Display the game over screen with final score
   }
 }
 
@@ -231,7 +234,7 @@ function updateHighScore() {
 
 // Function to display game over screen
 function displayGameOver() {
-  gameOverScreen.textContent = 'Game Over! Your Score: ${snake.length - 1}';
+  gameOverScreen.textContent = `Game Over. Score: ${snake.length - 1}`;
   gameOverScreen.style.display = 'block';
 }
 
