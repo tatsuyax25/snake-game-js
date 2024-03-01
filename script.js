@@ -5,9 +5,6 @@ const logo = document.getElementById('logo');
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
 const startButton = document.getElementById('start-button');
-const gameOverScreen = document.getElementById('game-over-screen');
-
-
 
 // Define game variables
 const gridSize = 20;
@@ -58,11 +55,6 @@ function drawFood() {
     const foodElement = createGameElement("div", "food");
     setPosition(foodElement, food);
     board.appendChild(foodElement);
-  } else if (snake.length > 1) {
-    const finalScoreElement = document.getElementById("final-score");
-    finalScoreElement.textContent = `Final Score: ${snake.length - 1}`;
-    finalScoreElement.style.display = "block"; // Display the final score
-    gameOverScreen.style.display = "block"; // Display the game over screen with final score
   }
 }
 
@@ -108,12 +100,6 @@ function moveSnake() {
 
   draw();
 }
-
-// Testing move snake function
-// setInterval(() => {
-//   moveSnake();
-//   draw();
-// }, 200);
 
 // Function to start the game
 function startGame() {
@@ -231,11 +217,4 @@ function updateHighScore() {
   }
   highScoreText.style.display = 'block';
 }
-
-// Function to display game over screen
-function displayGameOver() {
-  gameOverScreen.textContent = `Game Over. Score: ${snake.length - 1}`;
-  gameOverScreen.style.display = 'block';
-}
-
 

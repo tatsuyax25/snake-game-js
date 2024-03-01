@@ -137,9 +137,9 @@ body,
 
 @media only screen and (max-width: 600px) {
   #game-board {
-    grid-template-columns: repeat(10, 30px); /* Increase column width for better visibility */
-    grid-template-rows: repeat(10, 30px); /* Increase row height for better visibility */
-    margin: 10px; /* Add some margin around the game board */
+    grid-template-columns: repeat(10, 33px); /* Increase column width for better visibility */
+    grid-template-rows: repeat(10, 33px); /* Increase row height for better visibility */
+    margin: 5px; /* Add some margin around the game board */
     position: relative; /* Set position to relative for absolute positioning of elements */
     touch-action: none;
   }
@@ -147,19 +147,19 @@ body,
   .game-border-1,
   .game-border-2,
   .game-border-3 {
-    border-width: 5px; /* Reduce border width for better visibility */
+    border-width: 7px; /* Reduce border width for better visibility */
   }
 
   .snake {
-    border-width: 1px; /* Reduce border width for better visibility */
-    width: 15px; /* Reduce snake size for better fit on mobile screen */
-    height: 15px;
+    border-width: 2px; /* Reduce border width for better visibility */
+    width: 10px; /* Reduce snake size for better fit on mobile screen */
+    height: 10px;
   }
 
   .food {
-    width: 15px; /* Reduce food size for better fit on mobile screen */
-    height: 15px;
-    border-width: 3px; /* Reduce border width for better visibility */
+    width: 10px; /* Reduce food size for better fit on mobile screen */
+    height: 10px; 
+    border-width: 2px; /* Reduce border width for better visibility */
   }
 
   #container {
@@ -176,8 +176,8 @@ body,
 
   #instruction-text {
     text-align: center; /* Center the instruction text */
-    margin-top: 40px; /* Add some top margin */
-    font-size: 14px; /* Decrease font size for better readability */
+    margin-top: 50px; /* Add some top margin */
+    font-size: 15px; /* Decrease font size for better readability */
   }
 
   #start-button {
