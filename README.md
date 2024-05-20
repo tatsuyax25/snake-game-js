@@ -17,3 +17,25 @@
 3. **Eat the Food**: Guide the snake to the food that appears randomly on the game board. Each piece of food consumed will increase the snake's length and your score.
 4. **Avoid Collisions**: Do not let the snake collide with the walls or its own body, as this will end the game.
 5. **Continue Playing**: The game continues until the snake collides with a wall or itself. Try to achieve the highest score possible before this happens.
+
+![Screenshot of Snake Game](https://i.imgur.com/A9cqLFK.png)
+
+## Play Now
+
+https://snake-web-game-js.netlify.app
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/14dbe80b-9cfb-4803-a74a-70cf6a6d2652/deploy-status)](https://app.netlify.com/sites/snake-web-game-js/deploys)
+
+## Technology
+
+* HTLM
+* CSS
+* JavaScript
+* Netlify
+
+## Future Update
+
+* Add animation and sound
+* Add Hi-Score Rank Board
+* Add mobile play
+
