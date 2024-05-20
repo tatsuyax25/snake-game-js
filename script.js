@@ -115,26 +115,29 @@ function startGame() {
 // Keypress event listeners
 function handleKeyPress(event) {
   // code to handle key press
-  if (
-    (!gameStarted && event.code === 'Space') || 
-    (!gameStarted && event.key === ' ')
-    ) {
+  if (!gameStarted && (event.code === 'Space' || event.key === ' ')) {
     startGame();
-  } else {
-    switch (event.key) {
-      case 'ArrowUp':
-        if (direction !== 'down') direction = 'up';
-        break;
-      case 'ArrowDown':
-        if (direction !== 'up') direction = 'down';
-        break;
-      case 'ArrowLeft':
-        if (direction !== 'right') direction = 'left';
-        break;
-      case 'ArrowRight':
-        if (direction !== 'left') direction = 'right';
-        break;
-    }
+    return;
+  }
+
+  if (gameStarted) {
+    handleGameKeyPress(event);
+  }
+};
+
+// Function to handle game key press
+function handleGameKeyPress(event) {
+  // code to handle game key press
+  const keyToDirectionMap = {
+    'ArrowUp': 'up',
+    'ArrowDown': 'down',
+    'ArrowLeft': 'left',
+    'ArrowRight': 'right',
+  };
+
+  const newDirection = keyToDirectionMap[event.key];
+  if (newDirection && direction !== newDirection) {
+    direction = newDirection;
   }
 };
 
