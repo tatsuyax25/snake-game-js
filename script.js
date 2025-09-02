@@ -5,6 +5,9 @@ const logo = document.getElementById('logo');
 const score = document.getElementById('score');
 const highScoreText = document.getElementById('highScore');
 const startButton = document.getElementById('start-button');
+const gameOverOverlay = document.getElementById('game-over-overlay');
+const finalScoreValue = document.getElementById('final-score-value');
+const restartButton = document.getElementById('restart-button');
 
 // Define game variables
 const gridSize = 20;
@@ -103,8 +106,7 @@ function moveSnake() {
   }
 
   if (checkCollision()) {
-    stopGame();
-    resetGame();
+    gameOver();
   }
 
   draw();
@@ -161,6 +163,13 @@ function handleGameKeyPress(event) {
 
 // Event listener for "Start Game" button click
 startButton.addEventListener('click', () => {
+  startGame();
+});
+
+// Event listener for "Restart" button click
+restartButton.addEventListener('click', () => {
+  hideGameOver();
+  resetGame();
   startGame();
 });
 
@@ -228,9 +237,26 @@ function updateScore() {
   }
 }
 
+// Function to handle game over
+function gameOver() {
+  clearInterval(gameInterval);
+  gameStarted = false;
+  
+  // Show final score in overlay
+  const currentScore = snake.length - 1;
+  finalScoreValue.textContent = currentScore.toString().padStart(3, '0');
+  
+  // Show game over overlay with animation
+  gameOverOverlay.classList.add('show');
+}
+
+// Function to hide game over overlay
+function hideGameOver() {
+  gameOverOverlay.classList.remove('show');
+}
+
 // Function to stop the game
 function stopGame() {
-  // code to stop the game
   clearInterval(gameInterval);
   gameStarted = false;
   instructionText.style.display = 'block';
