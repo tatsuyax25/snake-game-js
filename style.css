@@ -144,8 +144,10 @@ body,
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  width: 150px;
+  width: 250px;
   height: auto;
+  max-width: 85%;
+  max-height: 85%;
 }
 
 #start-button {
@@ -381,7 +383,9 @@ body,
   }
   
   #logo {
-    width: 100px;
+    width: 150px;
+    max-width: 80%;
+    max-height: 80%;
   }
 }
 
