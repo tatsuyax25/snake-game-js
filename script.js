@@ -148,6 +148,9 @@ function handleGameKeyPress(event) {
 
   const newDirection = keyToDirectionMap[event.key];
   
+  // Highlight the pressed arrow key
+  highlightArrowKey(event.key);
+  
   // Prevent snake from moving in opposite direction (would cause instant collision)
   const oppositeDirections = {
     'up': 'down',
@@ -160,6 +163,17 @@ function handleGameKeyPress(event) {
     direction = newDirection;
   }
 };
+
+// Function to highlight arrow key when pressed
+function highlightArrowKey(key) {
+  const arrowKey = document.querySelector(`[data-key="${key}"]`);
+  if (arrowKey) {
+    arrowKey.classList.add('active');
+    setTimeout(() => {
+      arrowKey.classList.remove('active');
+    }, 150);
+  }
+}
 
 // Event listener for "Start Game" button click
 startButton.addEventListener('click', () => {
