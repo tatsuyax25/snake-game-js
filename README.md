@@ -4,7 +4,7 @@
 
 Navigate the snake to consume as much food as possible while avoiding collisions with walls and the snake's own body. Each piece of food consumed increases the snake's length and score, making the game progressively more challenging. Aim to achieve the highest score possible!
 
-![Screenshot of Snake Game](https://i.imgur.com/52nXtmW)
+![Snake Game Screenshot](https://imgur.com/52nXtmW)
 
 ## ✨ Features
 
@@ -51,9 +51,8 @@ Navigate the snake to consume as much food as possible while avoiding collisions
 - **Score Points**: Each food item increases your score and snake length
 - **Beat High Score**: Try to surpass your previous best!
 
-![Screenshot of Snake Game](https://i.imgur.com/SFhgfUg)
-
-![Screenshot of Snake Game](https://i.imgur.com/SGngvCr)
+![Snake Game Game Play](https://imgur.com/SFhgfUg)
+![Snake Game Game Over Screen](https://imgur.com/SGngvCr)
 
 ## 🎮 Play Now
 
