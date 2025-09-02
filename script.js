@@ -207,10 +207,21 @@ function resetGame() {
 }
 
 // Function to update the score
+// Added animation when score increases
 function updateScore() {
-  // code to update the score
   const currentScore = snake.length - 1;
+  const previousScore = parseInt(score.textContent) || 0;
+  
   score.textContent = currentScore.toString().padStart(3, '0');
+  
+  // Trigger animation if score increased
+  if (currentScore > previousScore) {
+    score.classList.remove('score-boost');
+    // Force reflow to restart animation
+    score.offsetHeight;
+    score.classList.add('score-boost');
+  }
+  
   if (currentScore > highScore) {
     highScore = currentScore;
     highScoreText.textContent = highScore.toString().padStart(3, '0');

@@ -264,6 +264,22 @@ body,
 }
 
 /* Score update animation */
-.score-update {
-  animation: pulse 0.3s ease-in-out;
+@keyframes scoreBoost {
+  0% {
+    transform: scale(1);
+    color: #f39c12;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #e74c3c;
+    text-shadow: 0 0 10px rgba(231, 76, 60, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    color: #f39c12;
+  }
+}
+
+.score-boost {
+  animation: scoreBoost 0.4s ease-out;
 }
