@@ -19,23 +19,39 @@ let gameInterval;
 let gameSpeedDelay = 200;
 let gameStarted = false;
 
+// Performance optimization: track DOM elements
+let snakeElements = [];
+let foodElement = null;
+
 
 // Draw game map, snake, food, etc.
-// Performance optimized: only clear and redraw when necessary
+// Performance optimized: differential rendering
 function draw() {
-  board.innerHTML = ''; // Clear the board (could be optimized further)
   drawSnake();
   drawFood();
   updateScore();
 }
 
-// Draw snake
+// Draw snake with differential rendering
 function drawSnake() {
-  // code to draw the snake
-  snake.forEach((segment) => {
-    const snakeElement = createGameElement('div', 'snake');
-    setPosition(snakeElement, segment);
-    board.appendChild(snakeElement);
+  // Remove excess elements if snake got shorter
+  while (snakeElements.length > snake.length) {
+    const element = snakeElements.pop();
+    if (element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+  }
+  
+  // Add new elements if snake got longer
+  while (snakeElements.length < snake.length) {
+    const element = createGameElement('div', 'snake');
+    board.appendChild(element);
+    snakeElements.push(element);
+  }
+  
+  // Update positions of existing elements
+  snake.forEach((segment, index) => {
+    setPosition(snakeElements[index], segment);
   });
 }
 
@@ -52,13 +68,17 @@ function setPosition(element, position) {
   element.style.gridRowStart = position.y;
 }
 
-// Draw food function
+// Draw food with element reuse
 function drawFood() {
-  // code to draw food
   if (gameStarted) {
-    const foodElement = createGameElement("div", "food");
+    if (!foodElement) {
+      foodElement = createGameElement("div", "food");
+      board.appendChild(foodElement);
+    }
     setPosition(foodElement, food);
-    board.appendChild(foodElement);
+  } else if (foodElement && foodElement.parentNode) {
+    foodElement.parentNode.removeChild(foodElement);
+    foodElement = null;
   }
 }
 
@@ -219,9 +239,15 @@ function checkCollision() {
 }
 
 // Function to reset the game
-// Fixed: Removed duplicate updateHighScore call (updateScore handles this)
+// Performance optimized: clean up DOM elements
 function resetGame() {
   stopGame();
+  
+  // Clear DOM elements
+  board.innerHTML = '';
+  snakeElements = [];
+  foodElement = null;
+  
   snake = [{ x: 10, y: 10 }]; // Reset snake to starting position
   food = generateFood(); // Generate new food position
   direction = "right"; // Reset direction
