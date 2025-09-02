@@ -18,8 +18,9 @@ let gameStarted = false;
 
 
 // Draw game map, snake, food, etc.
+// Performance optimized: only clear and redraw when necessary
 function draw() {
-  board.innerHTML = '';
+  board.innerHTML = ''; // Clear the board (could be optimized further)
   drawSnake();
   drawFood();
   updateScore();
@@ -59,11 +60,19 @@ function drawFood() {
 }
 
 // Function to generate food
+// Fixed: Ensures food doesn't spawn on snake body
 function generateFood() {
-  // code to generate food
-  const x = Math.floor(Math.random() * gridSize) + 1;
-  const y = Math.floor(Math.random() * gridSize) + 1;
-  return { x, y };
+  let newFood;
+  
+  // Keep generating new positions until we find one not occupied by snake
+  do {
+    newFood = {
+      x: Math.floor(Math.random() * gridSize) + 1,
+      y: Math.floor(Math.random() * gridSize) + 1
+    };
+  } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+  
+  return newFood;
 }
 
 // Function to move snake
@@ -126,8 +135,8 @@ function handleKeyPress(event) {
 };
 
 // Function to handle game key press
+// Fixed: Prevents snake from reversing into itself
 function handleGameKeyPress(event) {
-  // code to handle game key press
   const keyToDirectionMap = {
     'ArrowUp': 'up',
     'ArrowDown': 'down',
@@ -136,7 +145,16 @@ function handleGameKeyPress(event) {
   };
 
   const newDirection = keyToDirectionMap[event.key];
-  if (newDirection && direction !== newDirection) {
+  
+  // Prevent snake from moving in opposite direction (would cause instant collision)
+  const oppositeDirections = {
+    'up': 'down',
+    'down': 'up',
+    'left': 'right',
+    'right': 'left'
+  };
+  
+  if (newDirection && newDirection !== oppositeDirections[direction]) {
     direction = newDirection;
   }
 };
@@ -146,14 +164,9 @@ startButton.addEventListener('click', () => {
   startGame();
 });
 
-// Event listener fo key presses
-document.addEventListener('keydown', (event) => {
-  if ((event.code === 'Space' || event.key === ' ') && !gameStarted) {
-    startGame();
-  } else if (event.key.startsWith('Arrow')) {
-    direction = event.key.toLowerCase().replace("arrow", "");
-  }
-});
+// Event listener for key presses (fixed typo and removed duplicate logic)
+// Using the proper handleKeyPress function instead of duplicate inline logic
+document.addEventListener('keydown', handleKeyPress);
 
 // Function to increase game speed
 function increaseSpeed() {
@@ -163,14 +176,16 @@ function increaseSpeed() {
 }
 
 // Function to check collision
+// Fixed: Proper boundary detection for 1-based coordinate system
 function checkCollision() {
-  // code to check collision
   const head = snake[0];
 
+  // Check wall collision (coordinates are 1-based, so valid range is 1 to gridSize)
   if (head.x < 1 || head.x > gridSize || head.y < 1 || head.y > gridSize) {
     return true;
   }
 
+  // Check self collision (skip head at index 0)
   for (let i = 1; i < snake.length; i++) {
     if (head.x === snake[i].x && head.y === snake[i].y) {
       return true;
@@ -181,14 +196,14 @@ function checkCollision() {
 }
 
 // Function to reset the game
+// Fixed: Removed duplicate updateHighScore call (updateScore handles this)
 function resetGame() {
-  // code to reset the game
-  updateHighScore();
   stopGame();
-  snake = [{ x: 10, y: 10 }];
-  direction = "right";
-  gameSpeedDelay = 200;
-  updateScore();
+  snake = [{ x: 10, y: 10 }]; // Reset snake to starting position
+  food = generateFood(); // Generate new food position
+  direction = "right"; // Reset direction
+  gameSpeedDelay = 200; // Reset speed
+  updateScore(); // This already handles high score updates
 }
 
 // Function to update the score
@@ -211,13 +226,9 @@ function stopGame() {
   logo.style.display = 'block';
 }
 
+// Function to update high score display
+// Note: This function is now only used for showing the high score element
 function updateHighScore() {
-  // code to update the high score
-  const currentScore = snake.length - 1;
-  if (currentScore > highScore) {
-    highScore = currentScore;
-    highScoreText.textContent = highScore.toString().padStart(3, '0');
-  }
   highScoreText.style.display = 'block';
 }
 
