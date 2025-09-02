@@ -23,6 +23,12 @@ let gameStarted = false;
 let snakeElements = [];
 let foodElement = null;
 
+// Mobile touch controls
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
 
 // Draw game map, snake, food, etc.
 // Performance optimized: differential rendering
@@ -157,7 +163,7 @@ function handleKeyPress(event) {
 };
 
 // Function to handle game key press
-// Fixed: Prevents snake from reversing into itself
+// Updated to use unified direction change function
 function handleGameKeyPress(event) {
   const keyToDirectionMap = {
     'ArrowUp': 'up',
@@ -168,19 +174,11 @@ function handleGameKeyPress(event) {
 
   const newDirection = keyToDirectionMap[event.key];
   
-  // Highlight the pressed arrow key
-  highlightArrowKey(event.key);
-  
-  // Prevent snake from moving in opposite direction (would cause instant collision)
-  const oppositeDirections = {
-    'up': 'down',
-    'down': 'up',
-    'left': 'right',
-    'right': 'left'
-  };
-  
-  if (newDirection && newDirection !== oppositeDirections[direction]) {
-    direction = newDirection;
+  if (newDirection) {
+    // Highlight the pressed arrow key
+    highlightArrowKey(event.key);
+    // Use unified direction change function
+    changeDirection(newDirection);
   }
 };
 
@@ -210,6 +208,89 @@ restartButton.addEventListener('click', () => {
 // Event listener for key presses (fixed typo and removed duplicate logic)
 // Using the proper handleKeyPress function instead of duplicate inline logic
 document.addEventListener('keydown', handleKeyPress);
+
+// Mobile touch controls event listeners
+document.querySelectorAll('.mobile-btn').forEach(btn => {
+  btn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const direction = btn.getAttribute('data-direction');
+    changeDirection(direction);
+    btn.classList.add('active');
+  });
+  
+  btn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    btn.classList.remove('active');
+  });
+});
+
+// Swipe gesture detection
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+});
+
+document.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipe();
+});
+
+// Function to handle swipe gestures
+function handleSwipe() {
+  if (!gameStarted) return;
+  
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  const minSwipeDistance = 30;
+  
+  // Determine if swipe is horizontal or vertical
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    // Horizontal swipe
+    if (Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        changeDirection('right');
+      } else {
+        changeDirection('left');
+      }
+    }
+  } else {
+    // Vertical swipe
+    if (Math.abs(deltaY) > minSwipeDistance) {
+      if (deltaY > 0) {
+        changeDirection('down');
+      } else {
+        changeDirection('up');
+      }
+    }
+  }
+}
+
+// Unified function to change direction
+function changeDirection(newDirection) {
+  if (!gameStarted) return;
+  
+  // Prevent snake from moving in opposite direction
+  const oppositeDirections = {
+    'up': 'down',
+    'down': 'up',
+    'left': 'right',
+    'right': 'left'
+  };
+  
+  if (newDirection && newDirection !== oppositeDirections[direction]) {
+    direction = newDirection;
+    
+    // Highlight corresponding arrow key
+    const keyMap = {
+      'up': 'ArrowUp',
+      'down': 'ArrowDown',
+      'left': 'ArrowLeft',
+      'right': 'ArrowRight'
+    };
+    highlightArrowKey(keyMap[newDirection]);
+  }
+}
 
 // Function to increase game speed
 function increaseSpeed() {
